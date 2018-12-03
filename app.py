@@ -34,13 +34,7 @@ df.columns = ['TIME','GEO','UNIT','NA_ITEM','VALUE','FF'] #change column names
 #replace : with NaN
 df.replace(':', np.nan)
 
-
-app = dash.Dash(__name__)
-server = app.server
-
-
-#css style
-app.css.append_css({"external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"})
+app = dash.Dash()
 
 #indicators for 1
 available_indicators = df['NA_ITEM'].unique()
@@ -52,7 +46,12 @@ geo_indicators=df["GEO"].unique()
 #layout for 1
 app.layout = html.Div([
     html.Div([
-
+        
+        #html.H1(children='1: Country by Item x Item'),
+        
+        html.Div([
+            html.Div('Graph 1: Country by Item x Item', style={'color': 'black', 'fontSize': 30})]),
+        
         html.Div([
             dcc.Dropdown(
                 id='xaxis-column',
@@ -94,7 +93,10 @@ app.layout = html.Div([
         marks={str(year): str(year) for year in df['TIME'].unique()}
     ),
 
-
+    html.Div(style={'height':50}), 
+    
+    html.Div([
+        html.Div('Graph 2: Country x Item', style={'color': 'black', 'fontSize': 30})]),
 #layout for 2
 
     html.Div([
@@ -119,6 +121,9 @@ app.layout = html.Div([
 
 
     dcc.Graph(id='indicator-graphic2'),
+    
+    html.Div([
+        html.Div('Chanelle Bonnici', style={'color': 'black', 'fontSize': 12})]),
 
 ])
 
@@ -158,7 +163,7 @@ def update_graph(xaxis_column_name, yaxis_column_name, #graph is being updated e
                 'title': yaxis_column_name,
                 'type': 'linear' if yaxis_type == 'Linear' else 'log'
             },
-            margin={'l': 40, 'b': 40, 't': 10, 'r': 0},
+            margin={'l': 60, 'b': 40, 't': 10, 'r': 60},
             hovermode='closest'
         )
     }
@@ -187,7 +192,7 @@ def update_graph(country_name, yaxis_column_name):
             yaxis={
                 'title': yaxis_column_name,
                 'type': 'linear'},
-            margin={'l': 30, 'b': 40, 't': 10, 'r': 0},
+            margin={'l': 60, 'b': 40, 't': 10, 'r': 60},
             hovermode='closest'
         )
     }
