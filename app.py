@@ -34,7 +34,10 @@ df.columns = ['TIME','GEO','UNIT','NA_ITEM','VALUE','FF'] #change column names
 #replace : with NaN
 df.replace(':', np.nan)
 
-app = dash.Dash()
+app = dash.Dash(__name__)
+server = app.server
+
+app.css.append_css({"external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"})
 
 #indicators for 1
 available_indicators = df['NA_ITEM'].unique()
